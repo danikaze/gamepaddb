@@ -11,7 +11,6 @@ import {
 import NextApp, { AppContext, AppProps as NextAppProps } from 'next/app';
 import Head from 'next/head';
 import { store } from '@store';
-import { appWithTranslation } from '@utils/i18n';
 import { useUserData } from '@utils/auth';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
@@ -24,7 +23,6 @@ import '@styles/globals.css';
 
 export type AppPage<P = {}, IP = P> = NextPage<P & AppPageProps, IP>;
 interface AppPageProps {
-  namespacesRequired?: string[];
   logger: NsLogger;
   user: UserAuthData | false;
 }
@@ -92,15 +90,9 @@ const App: FunctionComponent<NextAppProps<AppPageProps>> = ({
   );
 };
 
-/*
- * Order of HOC matters
- * 1. Apply redux
- * 2. Apply i18n
- */
-
 const ReduxApp = store.withRedux(App) as WithInitialProps;
 
-if (I18N_OPTIMIZED_NAMESPACES_ENABLED || AUTH_ENABLED) {
+if (AUTH_ENABLED) {
   ReduxApp.getInitialProps = async (appContext: AppContext) => {
     const appProps = await NextApp.getInitialProps(appContext);
     const defaultProps = (appContext.Component as AppPage).defaultProps || {};
@@ -130,7 +122,7 @@ if (I18N_OPTIMIZED_NAMESPACES_ENABLED || AUTH_ENABLED) {
   };
 }
 
-export default appWithTranslation(ReduxApp as FunctionComponent<NextAppProps>);
+export default ReduxApp as FunctionComponent<NextAppProps>;
 
 /**
  * User data from passport only is available when rendering from server side

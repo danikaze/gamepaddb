@@ -128,14 +128,19 @@ function getAvailableLanguages(localesPath) {
   if (availableLangs) return availableLangs;
   const list = [];
 
-  readdirSync(localesPath).forEach((filename) => {
-    const absPath = join(localesPath, filename);
-    const stats = statSync(absPath);
-    if (!stats.isDirectory(stats)) return;
-    list.push(filename);
-  });
+  try {
+    readdirSync(localesPath).forEach((filename) => {
+      const absPath = join(localesPath, filename);
+      const stats = statSync(absPath);
+      if (!stats.isDirectory(stats)) return;
+      list.push(filename);
+    });
 
-  availableLangs = list;
+    availableLangs = list;
+  } catch (e) {
+    return [];
+  }
+
   return list;
 }
 

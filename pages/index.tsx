@@ -77,10 +77,6 @@ const Home: AppPage = ({ logger }) => {
   );
 };
 
-Home.defaultProps = {
-  namespacesRequired: ['hello-world'],
-};
-
 // initialize the store depending on request data
 export const getServerSideProps = store.getServerSideProps((ctx) => {
   const n = Number(ctx.query?.n);

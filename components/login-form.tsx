@@ -9,7 +9,6 @@ import {
   Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { useTranslation } from '@utils/i18n';
 import { Twitter } from '@components/icons/twitter';
 
 export interface Props {
@@ -31,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
 
 export const LoginForm: FunctionComponent<Props> = ({ redirect, ...icons }) => {
   const classes = useStyles();
-  const { t } = useTranslation('login');
 
   const redirectData = redirect ? (
     <input type="hidden" name={AUTH_LOGIN_REDIRECT_PARAM} value={redirect} />
@@ -41,13 +39,13 @@ export const LoginForm: FunctionComponent<Props> = ({ redirect, ...icons }) => {
     <form action={AUTH_LOCAL_DO_LOGIN_URL} method="post">
       <Card>
         <CardContent>
-          <Typography variant="h5">{t('loginTitle')}</Typography>
+          <Typography variant="h5">Log In</Typography>
           <div className={classes.withTopMargin}>
-            <TextField label={t('username')} name="username" fullWidth={true} />
+            <TextField label="Username" name="username" fullWidth={true} />
           </div>
           <div className={classes.withTopMargin}>
             <TextField
-              label={t('password')}
+              label="Password"
               name="password"
               type="password"
               fullWidth={true}
@@ -63,7 +61,7 @@ export const LoginForm: FunctionComponent<Props> = ({ redirect, ...icons }) => {
             color="primary"
             variant="contained"
           >
-            {t('signInButton')}
+            Sign In
           </Button>
         </CardActions>
         {getIcons(icons)}
@@ -73,7 +71,6 @@ export const LoginForm: FunctionComponent<Props> = ({ redirect, ...icons }) => {
 };
 
 function getIcons(icons: Omit<Props, 'redirect'>): JSX.Element | null {
-  const { t } = useTranslation('login');
   const classes = useStyles();
   const list: JSX.Element[] = [];
 
@@ -81,7 +78,7 @@ function getIcons(icons: Omit<Props, 'redirect'>): JSX.Element | null {
     list.push(
       <Link
         key="twitter"
-        title={t('signInWithTwitter')}
+        title="Sign in with Twitter"
         href={AUTH_TWITTER_LOGIN_PAGE}
       >
         <Twitter fontSize="large" />
@@ -93,7 +90,7 @@ function getIcons(icons: Omit<Props, 'redirect'>): JSX.Element | null {
 
   return (
     <div className={classes.withFullMargin}>
-      <Typography>{t('signInWithService')}</Typography>
+      <Typography>Use one of the following servicesto sign in with</Typography>
       <div className={classes.center}>{list}</div>
     </div>
   );
