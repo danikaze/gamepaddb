@@ -1,6 +1,6 @@
 module.exports = {
   GLOBAL_EXAMPLE: 'GLOBAL_EXAMPLE',
-  AUTH_ENABLED: true,
+  AUTH_ENABLED: false,
   AUTH_LOGIN_PAGE: '/login',
   AUTH_LOGIN_SUCCESS_PAGE: '/auth?logged=1',
   AUTH_LOGIN_FAIL_PAGE: '/login?fail=1',
